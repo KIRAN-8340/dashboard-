@@ -1,6 +1,6 @@
 
 import React, { useState, useEffect, useMemo, useCallback } from 'react';
-import { MOCK_SUPPLY_CHAIN_DATA, MOCK_SUPPLIER_METADATA, REGIONS, PRODUCTS } from './constants';
+import { MOCK_SUPPLY_CHAIN_DATA, MOCK_SUPPLIER_METADATA, STATES, PRODUCTS } from './constants';
 import { FilterState, KPIStats, PredictiveAlert, SupplyChainData, SupplierData } from './types';
 import { calculateLinearRegression } from './utils/analytics';
 import { getSupplyChainInsights } from './services/geminiService';
@@ -21,7 +21,7 @@ const App: React.FC = () => {
   const [supplyData, setSupplyData] = useState<SupplyChainData[]>([]);
   const [supplierData, setSupplierData] = useState<SupplierData[]>([]);
   const [filters, setFilters] = useState<FilterState>({
-    region: 'All Regions',
+    state: 'All States',
     product: 'All Products',
     supplier: 'All Suppliers',
     timeRange: '30d'
@@ -34,7 +34,7 @@ const App: React.FC = () => {
   // Filter Logic
   const filteredData = useMemo(() => {
     let data = supplyData.length > 0 ? supplyData : MOCK_SUPPLY_CHAIN_DATA;
-    if (filters.region !== 'All Regions') data = data.filter(d => d.region === filters.region);
+    if (filters.state !== 'All States') data = data.filter(d => d.state === filters.state);
     if (filters.product !== 'All Products') data = data.filter(d => d.product === filters.product);
     
     const days = filters.timeRange === '7d' ? 7 : filters.timeRange === '30d' ? 30 : 90;
@@ -66,11 +66,11 @@ const App: React.FC = () => {
   const rawRegressionPoints = useMemo(() => {
     // We return the unfiltered-by-product data here so MainCharts can filter locally for "each product" view
     let dataForRegression = supplyData.length > 0 ? supplyData : MOCK_SUPPLY_CHAIN_DATA;
-    if (filters.region !== 'All Regions') dataForRegression = dataForRegression.filter(d => d.region === filters.region);
+    if (filters.state !== 'All States') dataForRegression = dataForRegression.filter(d => d.state === filters.state);
     
     const days = filters.timeRange === '7d' ? 7 : filters.timeRange === '30d' ? 30 : 90;
     return dataForRegression.slice(-days * PRODUCTS.length); // Get enough points for all products
-  }, [filters.region, filters.timeRange, supplyData]);
+  }, [filters.state, filters.timeRange, supplyData]);
 
   const refreshInsights = useCallback(async () => {
     if (filteredData.length === 0) return;
@@ -115,8 +115,8 @@ const App: React.FC = () => {
       <Sidebar 
         activeTab={activeTab} 
         setActiveTab={(tab) => {
-          if (REGIONS.includes(tab) || tab === 'All Regions') {
-            setFilters(prev => ({ ...prev, region: tab }));
+          if (STATES.includes(tab) || tab === 'All States') {
+            setFilters(prev => ({ ...prev, state: tab }));
             setActiveTab('overview');
           } else if (PRODUCTS.includes(tab) || tab === 'All Products') {
             setFilters(prev => ({ ...prev, product: tab }));

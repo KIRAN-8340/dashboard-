@@ -12,7 +12,7 @@ export const getSupplyChainInsights = async (data: SupplyChainData[]): Promise<{
     t: d.timestamp,
     inv: d.inventoryLevel,
     lead: d.leadTime,
-    region: d.region
+    state: d.state
   }));
 
   try {

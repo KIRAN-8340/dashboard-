@@ -1,12 +1,12 @@
 
 import React from 'react';
-import { REGIONS, PRODUCTS } from '../constants';
+import { STATES, PRODUCTS } from '../constants';
 
 interface SidebarProps {
   activeTab: string;
   setActiveTab: (tab: string) => void;
   isOpen?: boolean;
-  currentFilters?: { region: string; product: string };
+  currentFilters?: { state: string; product: string };
   onLogout?: () => void;
 }
 
@@ -54,28 +54,28 @@ const Sidebar: React.FC<SidebarProps> = ({ activeTab, setActiveTab, isOpen, curr
           ))}
         </div>
 
-        {/* Regions Navigation */}
+        {/* States Navigation */}
         <div className="space-y-1">
           <div className="flex items-center justify-between px-4 mb-2">
-            <p className="text-[10px] font-black text-slate-500 uppercase tracking-widest">By Region (India)</p>
+            <p className="text-[10px] font-black text-slate-500 uppercase tracking-widest">By State</p>
           </div>
           <button
-            onClick={() => setActiveTab('All Regions')}
+            onClick={() => setActiveTab('All States')}
             className={`w-full flex items-center gap-3 px-4 py-2 rounded-lg text-[13px] font-bold transition-all ${
-              currentFilters?.region === 'All Regions' ? 'text-blue-400 bg-blue-400/10' : 'text-slate-400 hover:text-slate-200'
+              currentFilters?.state === 'All States' ? 'text-blue-400 bg-blue-400/10' : 'text-slate-400 hover:text-slate-200'
             }`}
           >
-            Show All Regions
+            Show All States
           </button>
-          {REGIONS.map((region) => (
+          {STATES.map((state) => (
             <button
-              key={region}
-              onClick={() => setActiveTab(region)}
+              key={state}
+              onClick={() => setActiveTab(state)}
               className={`w-full text-left px-4 py-2 rounded-lg text-[13px] font-semibold transition-all ${
-                currentFilters?.region === region ? 'text-white bg-blue-600 shadow-md' : 'text-slate-500 hover:text-slate-300'
+                currentFilters?.state === state ? 'text-white bg-blue-600 shadow-md' : 'text-slate-500 hover:text-slate-300'
               }`}
             >
-              • {region}
+              • {state}
             </button>
           ))}
         </div>

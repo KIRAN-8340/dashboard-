@@ -1,6 +1,6 @@
 
 import React from 'react';
-import { REGIONS, PRODUCTS } from '../constants';
+import { STATES, PRODUCTS } from '../constants';
 import { FilterState } from '../types';
 
 interface HeaderProps {
@@ -46,14 +46,14 @@ const DashboardHeader: React.FC<HeaderProps> = ({ filters, setFilters, onRefresh
 
         <div className="flex flex-wrap items-center gap-2 md:gap-3">
           <div className="flex items-center bg-slate-100/80 p-1 rounded-xl gap-1">
-            <span className="text-[10px] font-black text-slate-500 uppercase tracking-widest px-2">Region</span>
+            <span className="text-[10px] font-black text-slate-500 uppercase tracking-widest px-2">State</span>
             <select 
               className="min-w-[140px] px-3 py-1.5 bg-white border border-slate-200 rounded-lg text-sm font-bold text-slate-700 focus:outline-none focus:ring-2 focus:ring-blue-500 shadow-sm transition-all"
-              value={filters.region}
-              onChange={(e) => setFilters({ ...filters, region: e.target.value })}
+              value={filters.state}
+              onChange={(e) => setFilters({ ...filters, state: e.target.value })}
             >
-              <option value="All Regions">🌍 All Regions</option>
-              {REGIONS.map(r => <option key={r} value={r}>{r}</option>)}
+              <option value="All States">🌍 All States</option>
+              {STATES.map(s => <option key={s} value={s}>{s}</option>)}
             </select>
           </div>
 

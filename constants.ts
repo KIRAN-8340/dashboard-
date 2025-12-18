@@ -1,10 +1,20 @@
 
 import { SupplyChainData, SupplierData } from './types';
 
-export const REGIONS = ['North India', 'South India', 'East India', 'West India', 'Central India'];
+export const STATES = [
+  'Andhra Pradesh', 'Arunachal Pradesh', 'Assam', 'Bihar', 'Chhattisgarh', 
+  'Goa', 'Gujarat', 'Haryana', 'Himachal Pradesh', 'Jharkhand', 
+  'Karnataka', 'Kerala', 'Madhya Pradesh', 'Maharashtra', 'Manipur', 
+  'Meghalaya', 'Mizoram', 'Nagaland', 'Odisha', 'Punjab', 
+  'Rajasthan', 'Sikkim', 'Tamil Nadu', 'Telangana', 'Tripura', 
+  'Uttar Pradesh', 'Uttarakhand', 'West Bengal',
+  'Andaman and Nicobar Islands', 'Chandigarh', 'Dadra and Nagar Haveli and Daman and Diu',
+  'Delhi', 'Jammu and Kashmir', 'Ladakh', 'Lakshadweep', 'Puducherry'
+];
+
 export const PRODUCTS = ['Electronics', 'Textiles', 'Pharmaceuticals', 'Automotive Parts', 'Food & Beverage'];
 export const SUPPLIERS = ['Reliance Logistics', 'Tata Supply Chain', 'Adani Ports', 'Mahindra Logistics', 'Blue Dart'];
-export const DESTINATIONS = ['Mumbai Hub', 'Delhi Logistics Park', 'Bangalore Tech Port', 'Chennai Wharf', 'Hyderabad Zone', 'Pune Industrial Estate'];
+export const DESTINATIONS = ['Mumbai Hub', 'Delhi Logistics Park', 'Bangalore Tech Port', 'Chennai Wharf', 'Hyderabad Zone', 'Pune Industrial Estate', 'Kolkata Gateway', 'Ahmedabad Hub'];
 
 export const MOCK_SUPPLIER_METADATA: SupplierData[] = SUPPLIERS.map(name => ({
   name,
@@ -19,9 +29,10 @@ const generateMockData = (): SupplyChainData[] => {
   const data: SupplyChainData[] = [];
   const now = new Date();
   
-  for (let i = 0; i < 200; i++) {
-    const timestamp = new Date(now.getTime() - (i * 24 * 60 * 60 * 1000)).toISOString();
-    const region = REGIONS[Math.floor(Math.random() * REGIONS.length)];
+  // Generating more data points to account for the larger number of states
+  for (let i = 0; i < 500; i++) {
+    const timestamp = new Date(now.getTime() - (i * 12 * 60 * 60 * 1000)).toISOString(); // Data every 12 hours
+    const state = STATES[Math.floor(Math.random() * STATES.length)];
     const product = PRODUCTS[Math.floor(Math.random() * PRODUCTS.length)];
     const supplier = SUPPLIERS[Math.floor(Math.random() * SUPPLIERS.length)];
     const destination = DESTINATIONS[Math.floor(Math.random() * DESTINATIONS.length)];
@@ -34,7 +45,7 @@ const generateMockData = (): SupplyChainData[] => {
     data.push({
       id: `sc-${i}`,
       timestamp,
-      region,
+      state,
       product,
       supplier,
       inventoryLevel,

@@ -27,7 +27,7 @@ const DataPipeline: React.FC<DataPipelineProps> = ({ onDataReady }) => {
           const mapped: SupplyChainData[] = (results.data as any[]).map((row, idx) => ({
             id: row.id || `csv-${idx}-${Date.now()}`,
             timestamp: row.timestamp || new Date().toISOString(),
-            region: row.region || 'North India',
+            state: row.state || row.region || 'Maharashtra',
             product: row.product || 'General Goods',
             supplier: row.supplier || 'Standard Vendor',
             inventoryLevel: Number(row.inventoryLevel) || 0,

@@ -2,7 +2,7 @@
 export interface SupplyChainData {
   id: string;
   timestamp: string;
-  region: string;
+  state: string;
   product: string;
   supplier: string;
   inventoryLevel: number;
@@ -55,7 +55,7 @@ export interface PredictiveAlert {
 }
 
 export type FilterState = {
-  region: string;
+  state: string;
   product: string;
   supplier: string;
   timeRange: '7d' | '30d' | '90d';
