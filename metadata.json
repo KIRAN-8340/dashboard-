@@ -1,0 +1,5 @@
+{
+  "name": "Dashboard",
+  "description": "A high-performance supply chain monitoring dashboard featuring real-time analytics, predictive alerts, and advanced statistical modeling including K-Means clustering and linear regression forecasts.",
+  "requestFramePermissions": []
+}
