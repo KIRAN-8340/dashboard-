@@ -9,7 +9,11 @@ export default defineConfig(({ mode }) => {
   
   return {
     plugins: [react()],
-    // Removed manual process.env.API_KEY definition in the define block.
+    server: {
+      host: true, // Exposes the server on the local network
+      port: 5173,
+      strictPort: true, // Ensures the port doesn't change if 5173 is busy
+    },
     // The API_KEY is automatically injected into the environment as per the GenAI coding guidelines.
   };
 });
