@@ -1,23 +1,15 @@
-import path from 'path';
+
 import { defineConfig, loadEnv } from 'vite';
 import react from '@vitejs/plugin-react';
 
 export default defineConfig(({ mode }) => {
-    const env = loadEnv(mode, '.', '');
-    return {
-      server: {
-        port: 3000,
-        host: '0.0.0.0',
-      },
-      plugins: [react()],
-      define: {
-        'process.env.API_KEY': JSON.stringify(env.GEMINI_API_KEY),
-        'process.env.GEMINI_API_KEY': JSON.stringify(env.GEMINI_API_KEY)
-      },
-      resolve: {
-        alias: {
-          '@': path.resolve(__dirname, '.'),
-        }
-      }
-    };
+  // Use (process as any).cwd() to resolve the TypeScript error where 'cwd' is not found on the Process type.
+  // This ensures the current working directory is correctly identified for environment variable loading.
+  const env = loadEnv(mode, (process as any).cwd(), '');
+  
+  return {
+    plugins: [react()],
+    // Removed manual process.env.API_KEY definition in the define block.
+    // The API_KEY is automatically injected into the environment as per the GenAI coding guidelines.
+  };
 });

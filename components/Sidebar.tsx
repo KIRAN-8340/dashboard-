@@ -29,7 +29,7 @@ const Sidebar: React.FC<SidebarProps> = ({ activeTab, setActiveTab, isOpen, curr
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
           </svg>
         </div>
-        <span className="text-xl font-black text-white tracking-tight">Main Menu</span>
+        <span className="text-xl font-black text-white tracking-tight">Dashboard</span>
       </div>
 
       <nav className="flex-1 p-4 space-y-6 mt-4 pb-12">

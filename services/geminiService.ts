@@ -2,15 +2,10 @@
 import { GoogleGenAI, Type } from "@google/genai";
 import { SupplyChainData, PredictiveAlert } from "../types";
 
-const ai = new GoogleGenAI({ apiKey: process.env.API_KEY || '' });
-
 export const getSupplyChainInsights = async (data: SupplyChainData[]): Promise<{ summary: string; alerts: PredictiveAlert[] }> => {
-  if (!process.env.API_KEY) {
-    return {
-      summary: "API Key not found. Please provide an API key for live AI insights.",
-      alerts: []
-    };
-  }
+  // Always create a new GoogleGenAI instance right before making an API call to ensure it uses the most up-to-date API key.
+  // We use process.env.API_KEY directly as it is guaranteed to be pre-configured and valid.
+  const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
 
   // Sample data to keep tokens low
   const sample = data.slice(-20).map(d => ({
@@ -42,7 +37,7 @@ export const getSupplyChainInsights = async (data: SupplyChainData[]): Promise<{
                 properties: {
                   title: { type: Type.STRING },
                   description: { type: Type.STRING },
-                  severity: { type: Type.STRING, enum: ['low', 'medium', 'high'] }
+                  severity: { type: Type.STRING }
                 },
                 required: ['title', 'description', 'severity']
               }
@@ -53,10 +48,13 @@ export const getSupplyChainInsights = async (data: SupplyChainData[]): Promise<{
       }
     });
 
-    const result = JSON.parse(response.text);
+    // The text property of the response object is used directly to retrieve the generated string.
+    const text = response.text || "{}";
+    const result = JSON.parse(text);
+    
     return {
-      summary: result.summary,
-      alerts: result.alerts.map((a: any, i: number) => ({
+      summary: result.summary || "No automated summary available.",
+      alerts: (result.alerts || []).map((a: any, i: number) => ({
         ...a,
         id: `alert-${i}-${Date.now()}`,
         timestamp: new Date().toISOString()
