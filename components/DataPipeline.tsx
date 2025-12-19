@@ -2,7 +2,6 @@
 import React, { useState } from 'react';
 import Papa from 'papaparse';
 import { SupplyChainData, SupplierData } from '../types';
-import { MOCK_SUPPLY_CHAIN_DATA, MOCK_SUPPLIER_METADATA } from '../constants';
 
 interface DataPipelineProps {
   onDataReady: (logs: SupplyChainData[], suppliers: SupplierData[]) => void;
@@ -80,14 +79,14 @@ const DataPipeline: React.FC<DataPipelineProps> = ({ onDataReady }) => {
     <div className="min-h-screen pipeline-gradient flex items-center justify-center p-4 md:p-6">
       <div className="w-full max-w-4xl bg-white p-6 md:p-12 rounded-[2.5rem] shadow-2xl overflow-hidden">
         <div className="text-center mb-10">
-          <h2 className="text-3xl font-black text-slate-900 tracking-tight">Supply Chain Ingestion</h2>
-          <p className="text-slate-500 mt-2 font-medium">Map your logistics network and supplier directory</p>
+          <h2 className="text-3xl font-black text-slate-900 tracking-tight">Data Import</h2>
+          <p className="text-slate-500 mt-2 font-medium">Upload your logistics and supplier records</p>
         </div>
 
         {isProcessing ? (
           <div className="py-20 flex flex-col items-center justify-center space-y-6">
             <div className="w-16 h-16 border-4 border-slate-100 border-t-blue-600 rounded-full animate-spin"></div>
-            <p className="text-lg font-bold text-slate-900">Synchronizing Datasets...</p>
+            <p className="text-lg font-bold text-slate-900">Processing files...</p>
           </div>
         ) : (
           <div className="space-y-8">
@@ -106,8 +105,8 @@ const DataPipeline: React.FC<DataPipelineProps> = ({ onDataReady }) => {
                   </svg>
                 </div>
                 <div className="text-center">
-                  <p className="font-bold text-slate-900">{logFile ? logFile.name : 'Inventory Logs'}</p>
-                  <p className="text-slate-400 text-[10px] font-black uppercase tracking-widest mt-1">Primary Transactional Data</p>
+                  <p className="font-bold text-slate-900">{logFile ? logFile.name : 'Operations Data'}</p>
+                  <p className="text-slate-400 text-[10px] font-black uppercase tracking-widest mt-1">Required (.csv)</p>
                 </div>
               </div>
 
@@ -125,8 +124,8 @@ const DataPipeline: React.FC<DataPipelineProps> = ({ onDataReady }) => {
                   </svg>
                 </div>
                 <div className="text-center">
-                  <p className="font-bold text-slate-900">{supplierFile ? supplierFile.name : 'Supplier Profiles'}</p>
-                  <p className="text-slate-400 text-[10px] font-black uppercase tracking-widest mt-1">Optional Metadata</p>
+                  <p className="font-bold text-slate-900">{supplierFile ? supplierFile.name : 'Supplier Details'}</p>
+                  <p className="text-slate-400 text-[10px] font-black uppercase tracking-widest mt-1">Optional (.csv)</p>
                 </div>
               </div>
             </div>
@@ -139,14 +138,7 @@ const DataPipeline: React.FC<DataPipelineProps> = ({ onDataReady }) => {
                   logFile ? 'bg-blue-600 text-white hover:bg-blue-700 shadow-xl shadow-blue-500/20' : 'bg-slate-100 text-slate-300 cursor-not-allowed'
                 }`}
               >
-                Confirm Ingestion
-              </button>
-              
-              <button
-                onClick={() => onDataReady(MOCK_SUPPLY_CHAIN_DATA, MOCK_SUPPLIER_METADATA)}
-                className="w-full py-4 bg-white border-2 border-slate-100 text-slate-500 rounded-2xl font-black text-sm uppercase tracking-widest hover:border-blue-400 hover:text-blue-600 transition-all"
-              >
-                Quick Demo (Full Datasets)
+                Upload and Process
               </button>
             </div>
           </div>
